@@ -6,7 +6,7 @@ export const S={settings:{}};COLS.forEach(c=>S[c]=[]);
 const subs=new Set();export const onChange=f=>{subs.add(f);return()=>subs.delete(f)};
 let timer;export function save(){clearTimeout(timer);timer=setTimeout(()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){window.dispatchEvent(new CustomEvent('cdv-error',{detail:'พื้นที่จัดเก็บเต็ม — ส่งออกสำรองข้อมูลแล้วลบรูปเก่า'}))}subs.forEach(f=>f())},250)}
 export function load(){try{const j=JSON.parse(localStorage.getItem(KEY)||'null');if(j&&j.houses){Object.assign(S,j);return true}}catch(e){}return false}
-export const defaults=()=>({village:'เที่ยงตรง วิลเลจ',address:'กรุงเทพมหานคร',developer:'',manager:'นิติบุคคลหมู่บ้านจัดสรร',coverId:'',dueDay:15,lateRate:1.5,garbageFee:60,fee:{std:1800,big:2400},rates:{water:8.5,elec:4.1},
+export const defaults=()=>({village:'เที่ยงตรง วิลเลจ',address:'กรุงเทพมหานคร',developer:'CoreDash Technology',manager:'นิติบุคคลหมู่บ้านจัดสรร',coverId:'',dueDay:15,lateRate:1.5,garbageFee:60,fee:{std:1800,big:2400},rates:{water:8.5,elec:4.1},
  pk:{warnMin:30,t2:200,t3:500,night:300,block:500,line:200,window:90},
  fac:{pool:{name:'สระว่ายน้ำ',cap:12,open:6,close:20,shut:[12],max:2},fit:{name:'ห้องฟิตเนส',cap:15,open:6,close:21,shut:[],max:2}},
  zones:{A:'ซอย 1–6',B:'ซอย 7–12',C:'ซอย 13–18',D:'ซอย 19–24'},
@@ -111,7 +111,7 @@ export function seed(){const R=rng(20261110),pick=a=>a[Math.floor(R()*a.length)]
   S.jobs.push({id:uid('j'),name:'ตัดหญ้าและดูแลสวนส่วนกลาง',freq:'จันทร์ · พฤหัส 09:00',owner:'ทีมภูมิทัศน์ (4 คน)',next:nx(2),cat:'งานประจำ'},{id:uid('j'),name:'ทำความสะอาดสโมสร / สระ',freq:'ทุกวัน 05:30 และ 12:00',owner:'แม่บ้าน (3 คน)',next:nx(1),cat:'งานประจำ'},{id:uid('j'),name:'ตรวจปั๊มน้ำและถังพัก',freq:'วันที่ 1 และ 15',owner:'ช่างเทคนิค',next:nx(5),cat:'งานประจำ'},{id:uid('j'),name:'พ่นยุง ควบคุมสัตว์พาหะ',freq:'วันที่ 5 ของเดือน',owner:'ผู้รับเหมา',next:nx(26),cat:'งานประจำ'},{id:uid('j'),name:'เวร รปภ. 3 กะ',freq:'06–14 · 14–22 · 22–06',owner:'บริษัทรักษาความปลอดภัย',next:nx(0),cat:'งานประจำ'},{id:uid('j'),name:'ประชุมคณะกรรมการ',freq:'อังคารที่ 2 ของเดือน 19:00',owner:'ประธานคณะกรรมการ',next:nx(0),cat:'ประชุม'},{id:uid('j'),name:'ตรวจถังดับเพลิง',freq:'ทุก 6 เดือน',owner:'ผู้รับเหมา',next:nx(16),cat:'ความปลอดภัย'});
   S.polls.push({id:uid('p'),q:'ติดตั้งโซลาร์เซลล์บนหลังคาสโมสร',closes:nx(10),opts:[{t:'เห็นด้วย',votes:hs.slice(0,96).map(h=>h.no)},{t:'ไม่เห็นด้วย',votes:hs.slice(96,128).map(h=>h.no)}]});
   st.demo=true}
-export function init(){if(!load()){seed();save()}}
+export function init(){if(!load()){seed();save()}else if(S.settings.demo&&S.settings.village==='Life Bangkok Boulevard'){Object.assign(S.settings,{village:'เที่ยงตรง วิลเลจ',address:'กรุงเทพมหานคร',developer:'CoreDash Technology'});if(S.settings.coverId&&false)S.settings.coverId='';save()}}
 export function reset(withDemo=true){Object.keys(localStorage).filter(k=>k.startsWith(PKEY)).forEach(k=>localStorage.removeItem(k));if(withDemo)seed();else{const d=defaults();S.settings=d;COLS.forEach(c=>S[c]=[]);d.demo=false}save()}
 export const exportJSON=()=>JSON.stringify({app:'coredash-village',v:1,at:Date.now(),data:S});
 export function importJSON(t){const j=JSON.parse(t);if(j.app!=='coredash-village')throw new Error('ไฟล์ไม่ใช่ข้อมูล CoreDash Village');Object.assign(S,j.data);save()}

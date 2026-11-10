@@ -12,7 +12,7 @@ function shell(){const app=document.getElementById('app');
   app.innerHTML=`<aside class="side"><a class="brand" href="#/overview"><img src="assets/brand/logo-96.png" alt="CoreDash Technology"><div><b>CoreDash</b><small>Village</small></div></a>
   <a class="vp" href="#/settings" aria-label="รูปโครงการ"><img id="vpi" src="${esc(coverSrc())}" alt="ป้ายโครงการ"><div>${esc(S.settings.village)} · ${esc(S.settings.address)}</div></a>
   <nav class="nav" aria-label="เมนูหลัก">${NAV.map(([k,i,t])=>`<a href="#/${k}" data-nav="${k}">${ic(i)}<span>${t}</span></a>`).join('')}</nav><div class="sp"></div>
-  <div class="plant"><b>${esc(S.settings.village)}</b><small>${S.houses.length} หลัง · ${esc(S.settings.manager)}</small></div><button class="btn sm" id="inst" style="display:none;margin:8px 0">${ic('download')} ติดตั้งแอป</button></aside>
+  <div class="plant"><b>${esc(S.settings.village)}</b><small>${S.houses.length} หลัง · ${esc(S.settings.manager)}</small></div><button class="btn sm" id="inst" style="display:none;margin:8px 0;background:var(--side-hover);color:var(--side-on);border-color:var(--side-line)">${ic('download')} ติดตั้งแอป</button></aside>
   <div class="main"><header class="top"><img class="mlogo" src="assets/brand/logo-96.png" alt="CoreDash" width="27" height="34"><span class="crumb"><b id="crumb"></b></span><span class="sp"></span>
   <form class="gs" id="gsf" role="search">${ic('search')}<input id="gs" placeholder="ค้นหาบ้านเลขที่ / ทะเบียน / ชื่อ" autocomplete="off" aria-label="ค้นหา"></form>
   <button class="ib" id="cld" aria-label="ซิงก์" style="position:relative">${ic('up')}<i id="cdot" style="position:absolute;right:8px;top:8px;width:9px;height:9px;border-radius:50%;background:var(--mut);border:2px solid var(--surface)"></i></button>
