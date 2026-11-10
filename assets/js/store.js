@@ -6,7 +6,7 @@ export const S={settings:{}};COLS.forEach(c=>S[c]=[]);
 const subs=new Set();export const onChange=f=>{subs.add(f);return()=>subs.delete(f)};
 let timer;export function save(){clearTimeout(timer);timer=setTimeout(()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){window.dispatchEvent(new CustomEvent('cdv-error',{detail:'พื้นที่จัดเก็บเต็ม — ส่งออกสำรองข้อมูลแล้วลบรูปเก่า'}))}subs.forEach(f=>f())},250)}
 export function load(){try{const j=JSON.parse(localStorage.getItem(KEY)||'null');if(j&&j.houses){Object.assign(S,j);return true}}catch(e){}return false}
-export const defaults=()=>({village:'Life Bangkok Boulevard',address:'พระราม 5',developer:'SC Asset',manager:'นิติบุคคลหมู่บ้านจัดสรร',coverId:'',dueDay:15,lateRate:1.5,garbageFee:60,fee:{std:1800,big:2400},rates:{water:8.5,elec:4.1},
+export const defaults=()=>({village:'เที่ยงตรง วิลเลจ',address:'กรุงเทพมหานคร',developer:'',manager:'นิติบุคคลหมู่บ้านจัดสรร',coverId:'',dueDay:15,lateRate:1.5,garbageFee:60,fee:{std:1800,big:2400},rates:{water:8.5,elec:4.1},
  pk:{warnMin:30,t2:200,t3:500,night:300,block:500,line:200,window:90},
  fac:{pool:{name:'สระว่ายน้ำ',cap:12,open:6,close:20,shut:[12],max:2},fit:{name:'ห้องฟิตเนส',cap:15,open:6,close:21,shut:[],max:2}},
  zones:{A:'ซอย 1–6',B:'ซอย 7–12',C:'ซอย 13–18',D:'ซอย 19–24'},
